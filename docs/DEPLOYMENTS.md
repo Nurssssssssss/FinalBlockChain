@@ -140,3 +140,15 @@ After a successful broadcast, the generated `deployments/84532.json` file should
 
 ```
 ```
+
+
+## Subgraph Verification
+
+The subgraph was verified locally.
+
+| Check | Result |
+| --- | --- |
+| `npm run codegen` | Passed |
+| `npm run build` | Passed |
+
+The Graph CLI successfully generated contract ABI types, data source templates, GraphQL schema types, and compiled the subgraph to `build/subgraph.yaml`.
