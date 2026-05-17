@@ -1,0 +1,23 @@
+{
+  "name": "defi-superapp-lite",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Production-grade DeFi Super-App Lite final project: Foundry contracts, React frontend, subgraph, CI, and docs.",
+  "scripts": {
+    "install:all": "npm install && npm --prefix frontend install && npm --prefix subgraph install",
+    "build": "forge build && npm --prefix frontend run build",
+    "test": "forge test -vvv",
+    "coverage": "forge coverage --ir-minimum --report summary --report lcov",
+    "fmt": "forge fmt --check",
+    "slither": "slither . --config-file slither.config.json --exclude divide-before-multiply,incorrect-equality",
+    "frontend:lint": "npm --prefix frontend run lint",
+    "frontend:build": "npm --prefix frontend run build",
+    "subgraph:codegen": "npm --prefix subgraph run codegen",
+    "subgraph:build": "npm --prefix subgraph run build"
+  },
+  "devDependencies": {
+    "@openzeppelin/contracts": "5.6.1",
+    "@openzeppelin/contracts-upgradeable": "5.6.1",
+    "solc": "0.8.35"
+  }
+}

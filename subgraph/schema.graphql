@@ -1,0 +1,67 @@
+type TokenHolder @entity(immutable: false) {
+  id: ID!
+  account: Bytes!
+  balance: BigInt!
+  votingPower: BigInt!
+  updatedAt: BigInt!
+}
+
+type VaultPosition @entity(immutable: false) {
+  id: ID!
+  account: Bytes!
+  shares: BigInt!
+  assets: BigInt!
+  updatedAt: BigInt!
+}
+
+type Swap @entity(immutable: true) {
+  id: ID!
+  sender: Bytes!
+  receiver: Bytes!
+  tokenIn: Bytes!
+  tokenOut: Bytes!
+  amountIn: BigInt!
+  amountOut: BigInt!
+  transactionHash: Bytes!
+  timestamp: BigInt!
+  blockNumber: BigInt!
+}
+
+type LiquidityEvent @entity(immutable: true) {
+  id: ID!
+  kind: String!
+  provider: Bytes!
+  receiver: Bytes!
+  amount0: BigInt!
+  amount1: BigInt!
+  shares: BigInt!
+  transactionHash: Bytes!
+  timestamp: BigInt!
+  blockNumber: BigInt!
+}
+
+type Proposal @entity(immutable: false) {
+  id: ID!
+  proposalId: BigInt!
+  proposer: Bytes!
+  description: String!
+  voteStart: BigInt!
+  voteEnd: BigInt!
+  state: String!
+  forVotes: BigInt!
+  againstVotes: BigInt!
+  abstainVotes: BigInt!
+  createdAt: BigInt!
+  updatedAt: BigInt!
+}
+
+type ProtocolStat @entity(immutable: false) {
+  id: ID!
+  totalSwaps: BigInt!
+  totalVolumeIn: BigInt!
+  totalLiquidityEvents: BigInt!
+  totalVaultDeposits: BigInt!
+  totalVaultWithdrawals: BigInt!
+  totalRewards: BigInt!
+  updatedAt: BigInt!
+}

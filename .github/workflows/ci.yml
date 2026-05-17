@@ -1,0 +1,92 @@
+name: CI
+
+on:
+  push:
+    branches: ["main", "master"]
+  pull_request:
+
+jobs:
+  contracts:
+    name: Foundry, coverage, Slither
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: stable
+
+      - name: Forge fmt check
+        run: forge fmt --check
+
+      - name: Forge build
+        run: forge build
+
+      - name: Forge tests
+        run: forge test -vvv
+
+      - name: Forge coverage
+        run: forge coverage --ir-minimum --report summary --report lcov
+
+      - name: Install Slither
+        run: pipx install slither-analyzer
+
+      - name: Slither
+        run: slither . --config-file slither.config.json --exclude divide-before-multiply,incorrect-equality
+
+  frontend:
+    name: Frontend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        run: npm ci
+        working-directory: frontend
+
+      - name: Lint
+        run: npm run lint
+        working-directory: frontend
+
+      - name: Build
+        run: npm run build
+        working-directory: frontend
+
+  subgraph:
+    name: Subgraph
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: subgraph/package-lock.json
+
+      - name: Install subgraph dependencies
+        run: npm ci
+        working-directory: subgraph
+
+      - name: Codegen
+        run: npm run codegen
+        working-directory: subgraph
+
+      - name: Build
+        run: npm run build
+        working-directory: subgraph
